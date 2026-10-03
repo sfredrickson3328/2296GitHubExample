@@ -13,19 +13,23 @@ def main():
         if not task_name:
             break
 
-        # Validate that the duration is a positive whole number
+        # Validate that duration is numeric, non-blank, and strictly positive (> 0)
         while True:
             duration_input = input(
                 f"Enter duration in minutes for '{task_name}': "
             ).strip()
 
-            if duration_input.isdigit() and int(duration_input) > 0:
+            try:
+                # Convert input to int (or float if decimals are allowed)
                 duration = int(duration_input)
-                break
-            else:
-                print(
-                    "Invalid input. Please enter a positive whole number (e.g., 15, 30)."
-                )
+                
+                if duration > 0:
+                    break
+                else:
+                    print("Duration must be greater than zero.")
+            except ValueError:
+                # Triggers on blank inputs, non-numeric strings, or floats
+                print("Invalid input. Please enter a valid positive whole number (e.g., 15, 30).")
 
         # Store task as a dictionary
         tasks.append({"name": task_name, "duration": duration})
