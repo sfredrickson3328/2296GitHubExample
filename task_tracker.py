@@ -13,7 +13,40 @@ def main():
         if not task_name:
             break
 
-        # Validate that duration is numeric, non-blank, and strictly positive (> 0)
+        # Check for duplicate task names (case-insensitive)
+        existing_task = next(
+            (t for t in tasks if t["name"].lower() == task_name.lower()), None
+        )
+
+        if existing_task:
+            print(f"Note: '{existing_task['name']}' already exists with {existing_task['duration']} mins.")
+            action = input("Combine duration with existing task? [y/n]: ").strip().lower()
+
+            if action == 'y':
+                # Prompt for additional duration to add
+                while True:
+                    duration_input = input(
+                        f"Enter additional minutes to add to '{existing_task['name']}': "
+                    ).strip()
+
+                    try:
+                        additional_duration = int(duration_input)
+                        if additional_duration > 0:
+                            existing_task["duration"] += additional_duration
+                            print(f"Updated '{existing_task['name']}' total duration: {existing_task['duration']} mins.\n")
+                            break
+                        else:
+                            print("Duration must be greater than zero.")
+                    except ValueError:
+                        print("Invalid input. Please enter a valid positive whole number.")
+                continue  # Skip to next task entry loop
+            else:
+                # If user doesn't want to combine, prompt for a new name
+                task_name = input("Please enter a new unique task name: ").strip()
+                if not task_name:
+                    break
+
+        # Validate duration for new task entries
         while True:
             duration_input = input(
                 f"Enter duration in minutes for '{task_name}': "
@@ -21,7 +54,6 @@ def main():
 
             try:
                 duration = int(duration_input)
-                
                 if duration > 0:
                     break
                 else:
@@ -29,7 +61,7 @@ def main():
             except ValueError:
                 print("Invalid input. Please enter a valid positive whole number (e.g., 15, 30).")
 
-        # Store task as a dictionary
+        # Store new task
         tasks.append({"name": task_name, "duration": duration})
         print()
 
@@ -46,12 +78,11 @@ def main():
     print("\n" + "=" * 35)
     print("          SUMMARY REPORT          ")
     print("=" * 35)
-    
-    # Task Breakdown
+
     print("Entered Tasks:")
     for idx, task in enumerate(tasks, start=1):
         print(f"  {idx}. {task['name']:<20} : {task['duration']} mins")
-        
+
     print("-" * 35)
     print(f"Total tasks entered : {len(tasks)}")
     print(f"Total time spent    : {total_minutes} minutes")
