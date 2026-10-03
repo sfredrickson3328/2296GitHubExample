@@ -153,3 +153,66 @@ Non-numeric ("ten"): Caught by ValueError during parsing.
 Zero (0): Rejects via duration > 0 condition.
 
 Negative values (-10): Rejects via duration > 0 condition.
+
+
+AI Tests
+
+Normal Input
+--- Task Duration Tracker ---
+Enter a task name, then its duration in minutes.
+Press Enter on a blank task name when you are finished.
+
+Enter task name: Math 
+Enter duration in minutes for 'Math': 30
+
+Enter task name: Reading
+Enter duration in minutes for 'Reading': 45
+
+Enter task name: 
+
+===================================
+          SUMMARY REPORT          
+===================================
+Entered Tasks:
+  1. Math                 : 30 mins
+  2. Reading              : 45 mins
+-----------------------------------
+Total tasks entered : 2
+Total time spent    : 75 minutes
+Longest task        : Reading (45 minutes)
+===================================
+
+Boundary Input
+--- Task Duration Tracker ---
+Enter a task name, then its duration in minutes.
+Press Enter on a blank task name when you are finished.
+
+Enter task name: minute
+Enter duration in minutes for 'minute': 1
+
+Enter task name: 
+
+===================================
+          SUMMARY REPORT          
+===================================
+Entered Tasks:
+  1. minute               : 1 mins
+-----------------------------------
+Total tasks entered : 1
+Total time spent    : 1 minutes
+Longest task        : minute (1 minutes)
+===================================
+
+Invalid Input
+--- Task Duration Tracker ---
+Enter a task name, then its duration in minutes.
+Press Enter on a blank task name when you are finished.
+
+Enter task name: Help
+Enter duration in minutes for 'Help': -2
+Duration must be greater than zero.
+Enter duration in minutes for 'Help': 0 
+Duration must be greater than zero.
+Enter duration in minutes for 'Help': ds
+Invalid input. Please enter a valid positive whole number (e.g., 15, 30).
+Enter duration in minutes for 'Help': 
