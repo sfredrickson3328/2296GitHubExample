@@ -20,7 +20,6 @@ def main():
             ).strip()
 
             try:
-                # Convert input to int (or float if decimals are allowed)
                 duration = int(duration_input)
                 
                 if duration > 0:
@@ -28,7 +27,6 @@ def main():
                 else:
                     print("Duration must be greater than zero.")
             except ValueError:
-                # Triggers on blank inputs, non-numeric strings, or floats
                 print("Invalid input. Please enter a valid positive whole number (e.g., 15, 30).")
 
         # Store task as a dictionary
@@ -45,15 +43,22 @@ def main():
     longest_task = max(tasks, key=lambda task: task["duration"])
 
     # Display results
-    print("\n" + "=" * 30)
-    print("       SUMMARY REPORT       ")
-    print("=" * 30)
+    print("\n" + "=" * 35)
+    print("          SUMMARY REPORT          ")
+    print("=" * 35)
+    
+    # Task Breakdown
+    print("Entered Tasks:")
+    for idx, task in enumerate(tasks, start=1):
+        print(f"  {idx}. {task['name']:<20} : {task['duration']} mins")
+        
+    print("-" * 35)
     print(f"Total tasks entered : {len(tasks)}")
     print(f"Total time spent    : {total_minutes} minutes")
     print(
         f"Longest task        : {longest_task['name']} ({longest_task['duration']} minutes)"
     )
-    print("=" * 30)
+    print("=" * 35)
 
 
 if __name__ == "__main__":
